@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal" created-in="IU-241.17011.79">
+    <data-source name="todo@localhost" uuid="eed37cc0-067b-4b90-8c35-30f9359aff0b">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MARIADB" />
+      <user-name>root</user-name>
+      <schema-mapping />
+    </data-source>
+  </component>
+</project>
