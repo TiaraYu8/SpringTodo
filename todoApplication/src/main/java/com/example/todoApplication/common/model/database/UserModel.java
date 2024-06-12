@@ -25,7 +25,7 @@ public class UserModel extends BaseModel implements UserDetails {
 
     @Column(name = "username")
     @NotBlank(message = "This is mandatory")
-    private String userName;
+    private String username;
 
     @Column(name = "password")
     @NotBlank(message = "This is mandatory")
@@ -42,7 +42,7 @@ public class UserModel extends BaseModel implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userName;
+        return username;
     }
 
     @Override

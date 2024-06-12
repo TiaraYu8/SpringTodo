@@ -81,8 +81,6 @@ btodoApplication/src/main/java/com/example/todoApplication/common/model/web/form
 btodoApplication/src/main/java/com/example/todoApplication/common/model/web/form/SignInRequest.java,9\4\948a92f2d5143a74d21f50221318d5d25e5ee90f
 ”
 dtodoApplication/src/main/java/com/example/todoApplication/configuration/JwtAuthenticationFilter.java,d\0\d085c925f6f96bd368d49650a7c05c1199d6e360
-’
-btodoApplication/src/main/java/com/example/todoApplication/configuration/SecurityConfiguration.java,0\a\0aada298c0b9ed5f35175bcaa78096c01c23baa9
 ©
 ytodoApplication/src/main/java/com/example/todoApplication/web/controller/SecurityController/AuthenticationController.java,4\a\4af58fe652b9615806c4c91e6c189ea4f1c345f2
 ¨
