@@ -1,5 +1,6 @@
 package com.example.todoApplication.web.controller;
 
+import com.example.todoApplication.common.model.database.UserModel;
 import com.example.todoApplication.common.model.viewobject.TodoVO;
 import com.example.todoApplication.common.model.web.form.TodoCreate;
 import com.example.todoApplication.common.model.web.form.TodoDelete;
@@ -36,8 +37,9 @@ public class TodoController {
     public ResponseEntity<TodoCreateResponse> createTodo(@Valid @ModelAttribute TodoCreate form, @RequestParam("cover")MultipartFile file){
         try{
             todoServices.saveImage(file);
+            UserModel user = new UserModel();
             String todoId = todoServices.createTodo(
-                    form.getUserId(),
+                    user,
                     form.getTitle(),
                     form.getDescription(),
                     file);

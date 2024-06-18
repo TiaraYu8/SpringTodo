@@ -9,8 +9,6 @@ import com.example.todoApplication.repository.UserRepository;
 import com.example.todoApplication.service.authService.AuthenticationService;
 import com.example.todoApplication.service.jwtservice.JwtService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +18,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-    private final AuthenticationManager authenticationManager;
 
     @Override
     public JwtAuthenticationResponse signUp(SignUpRequest request) {

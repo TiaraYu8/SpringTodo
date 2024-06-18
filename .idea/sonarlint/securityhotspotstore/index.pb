@@ -87,3 +87,9 @@ ytodoApplication/src/main/java/com/example/todoApplication/web/controller/Securi
 xtodoApplication/src/main/java/com/example/todoApplication/web/controller/SecurityController/AuthorizationController.java,5\4\549a29466aa62246c89470e7890881359f0b25a1
 í
 btodoApplication/src/main/java/com/example/todoApplication/exception/ResourceNotFoundException.java,7\d\7d247ae2fcc8c5da359357b759181907b02327ea
+è
+_todoApplication/src/main/java/com/example/todoApplication/common/model/message/TodoMessage.java,2\4\24ee35ab20a6ab04bb62513299c99030c23f6127
+ì
+ctodoApplication/src/main/java/com/example/todoApplication/common/model/consts/KafkaTopicConsts.java,4\7\47b411973544f30a3d1ef132824c2b7ee793b17a
+ò
+htodoApplication/src/main/java/com/example/todoApplication/common/model/web/form/TodoMessageProducer.java,8\c\8c2e89f4a6cd45de28a25cd2346f1e9311bf4ed7

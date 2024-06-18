@@ -1,8 +1,12 @@
 package com.example.todoApplication.service.impl;
 
 import com.example.todoApplication.common.model.database.TodoModel;
+import com.example.todoApplication.common.model.database.UserModel;
+import com.example.todoApplication.common.model.message.TodoMessage;
 import com.example.todoApplication.common.model.viewobject.TodoVO;
+import com.example.todoApplication.common.model.web.form.TodoMessageProducer;
 import com.example.todoApplication.repository.TodoRepository;
+import com.example.todoApplication.repository.UserRepository;
 import com.example.todoApplication.service.TodoServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +25,7 @@ import java.util.stream.Collectors;
 @Service
 public class TodoServiceImpl implements TodoServices {
     private TodoRepository todoRepository;
+    private TodoMessage todoMessage;
 
     @Value("${file.upload-dir}")
     private String uploadDir;
@@ -77,19 +82,27 @@ public class TodoServiceImpl implements TodoServices {
     }
 
     @Override
-    public String createTodo(String userId, String title, String description, MultipartFile cover) {
+    public String createTodo(UserModel userId, String title, String description, MultipartFile cover) {
         String path = saveImage(cover);
 
         TodoModel todoModel = new TodoModel();
         todoModel.setId(UUID.randomUUID().toString());
+        todoModel.setUserId(userId);
         todoModel.setTitle(title);
         todoModel.setDescription(description);
         todoModel.setCover(path);
         todoModel.setIs_finished("Belum Selesai");
-        todoModel.setCreatedBy(userId);
-        todoModel.setModifiedBy(userId);
+        todoModel.setCreatedBy(userId.getUserId());
+        todoModel.setModifiedBy(userId.getUserId());
 
+        TodoMessageProducer todoMessageProducer = new TodoMessageProducer();
+        todoMessageProducer.setUserId(userId.getUserId());
+        todoMessageProducer.setTitle(todoModel.getTitle());
+        todoMessageProducer.setDescription(todoModel.getDescription());
+
+        todoMessage.publish(todoMessageProducer);
         todoRepository.save(todoModel);
+
 
         return todoModel.getId();
     }
@@ -114,5 +127,9 @@ public class TodoServiceImpl implements TodoServices {
     @Override
     public void deleteTodo(String id) {
         todoRepository.deleteById(id);
+    }
+    @Autowired
+    public void setTodoMessage(TodoMessage todoMessage) {
+        this.todoMessage = todoMessage;
     }
 }

@@ -16,14 +16,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
 public class UserModel extends BaseModel implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id")
     private String userId;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     @NotBlank(message = "This is mandatory")
     private String username;
 

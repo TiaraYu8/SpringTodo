@@ -19,6 +19,10 @@ public class TodoModel extends BaseModel{
     @Column(name = "id")
     private String id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private UserModel userId;
+
     @NotBlank(message = "Title is Mandatory")
     @Column(name = "title")
     private String title;
@@ -47,5 +51,7 @@ public class TodoModel extends BaseModel{
     @CreationTimestamp
     @Column(name = "modified_date")
     private LocalDateTime modifiedDate;
+    
+
 
 }

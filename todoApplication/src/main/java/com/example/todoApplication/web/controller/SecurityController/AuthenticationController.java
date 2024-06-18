@@ -4,6 +4,7 @@ import com.example.todoApplication.common.model.web.form.SignInRequest;
 import com.example.todoApplication.common.model.web.form.SignUpRequest;
 import com.example.todoApplication.common.model.web.response.JwtAuthenticationResponse;
 import com.example.todoApplication.service.authService.AuthenticationService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,7 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/signup")
-    public ResponseEntity<JwtAuthenticationResponse> signup(@RequestBody SignUpRequest registerRequest) {
+    public ResponseEntity<JwtAuthenticationResponse> signup(@Valid @RequestBody SignUpRequest registerRequest) {
         return ResponseEntity.ok(authenticationService.signUp(registerRequest));
     }
 
