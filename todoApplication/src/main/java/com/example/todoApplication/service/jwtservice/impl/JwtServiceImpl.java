@@ -4,9 +4,12 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 
 import com.example.todoApplication.service.jwtservice.JwtService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,8 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JwtServiceImpl implements JwtService {
+    private static final Logger logger = LoggerFactory.getLogger(JwtServiceImpl.class);
+
 
     @Value("${token.signing.key}")
     private String jwtSigningKey;
@@ -45,7 +50,8 @@ public class JwtServiceImpl implements JwtService {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token)
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey()).build().parseClaimsJws(token)
                 .getBody();
     }
 
@@ -56,17 +62,23 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String extractUserName(String token) {
-        return  extractClaim(token, Claims::getSubject);
+        String username = extractClaim(token, Claims::getSubject);
+        logger.info("Extracted username: {}", username);
+        return  username;
     }
 
     @Override
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+        String token = generateToken(new HashMap<>(), userDetails);
+        logger.info("Generated token: {}", token);
+        return token;
     }
 
     @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUserName(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        boolean isValid = (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        logger.info("Token validation result: {}", isValid);
+        return isValid;
     }
 }

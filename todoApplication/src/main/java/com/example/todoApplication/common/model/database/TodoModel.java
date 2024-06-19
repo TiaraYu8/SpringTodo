@@ -19,7 +19,7 @@ public class TodoModel extends BaseModel{
     @Column(name = "id")
     private String id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private UserModel userId;
 

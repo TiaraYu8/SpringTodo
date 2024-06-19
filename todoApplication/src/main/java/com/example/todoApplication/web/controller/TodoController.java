@@ -7,17 +7,22 @@ import com.example.todoApplication.common.model.web.form.TodoDelete;
 import com.example.todoApplication.common.model.web.form.TodoQuery;
 import com.example.todoApplication.common.model.web.form.TodoUpdateStatus;
 import com.example.todoApplication.common.model.web.response.*;
+import com.example.todoApplication.repository.UserRepository;
 import com.example.todoApplication.service.TodoServices;
 import jakarta.validation.Valid;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -26,10 +31,11 @@ public class TodoController {
     public static final Logger logger = LoggerFactory.getLogger("COMMON_ERROR");
 
     private final TodoServices todoServices;
+    private final UserRepository userRepository;
 
     @Autowired
-        public TodoController(TodoServices todoServices) {
-
+        public TodoController(UserRepository userRepository,TodoServices todoServices) {
+        this.userRepository = userRepository;
         this.todoServices = todoServices;
     }
 
@@ -37,7 +43,17 @@ public class TodoController {
     public ResponseEntity<TodoCreateResponse> createTodo(@Valid @ModelAttribute TodoCreate form, @RequestParam("cover")MultipartFile file){
         try{
             todoServices.saveImage(file);
-            UserModel user = new UserModel();
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String userId = authentication.getName();
+            System.out.println("Received token for user: " + userId); // Cetak token yang diterima
+
+            Optional<UserModel> userModelOptional = userRepository.findById(userId);
+            if(userModelOptional.isEmpty()){
+                throw new UsernameNotFoundException("user not found");
+            }
+            UserModel user = userModelOptional.get();
+
             String todoId = todoServices.createTodo(
                     user,
                     form.getTitle(),

@@ -30,6 +30,13 @@ public class TodoServiceImpl implements TodoServices {
     @Value("${file.upload-dir}")
     private String uploadDir;
 
+    private UserRepository userRepository;
+
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Autowired
     public void setTodoRepository(TodoRepository todoRepository){
 

@@ -34,7 +34,6 @@ public class TodoControllerTest extends TestTodo {
         File file = ResourceUtils.getFile("classpath:test.jpg");
         MockMultipartFile mockFile = new MockMultipartFile("cover", "test.jpg","image/jpeg", Files.readAllBytes(file.toPath()));
         TodoCreate form = new TodoCreate();
-        form.setUserId("create id");
         form.setTitle("new name");
         form.setDescription("new desc");
         form.setCover(mockFile);

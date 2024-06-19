@@ -37,7 +37,8 @@ public class TodoConfiguration {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers("/todo/**").permitAll()
+                        .requestMatchers("/api/v1/auth/some-secured-endpoint").authenticated()
+                        .requestMatchers("/todo/**").authenticated()
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
