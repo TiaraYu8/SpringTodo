@@ -16,8 +16,10 @@ import org.springframework.core.metrics.jfr.FlightRecorderApplicationStartup;
 
 @SpringBootApplication
 public class TodoApplication {
+
 	@Autowired
 	private TodoServices todoServices;
+
 	public static void main(String[] args) {
 		SpringApplication.run(TodoApplication.class, args);
 

@@ -93,3 +93,5 @@ _todoApplication/src/main/java/com/example/todoApplication/common/model/message/
 ctodoApplication/src/main/java/com/example/todoApplication/common/model/consts/KafkaTopicConsts.java,4\7\47b411973544f30a3d1ef132824c2b7ee793b17a
 ˜
 htodoApplication/src/main/java/com/example/todoApplication/common/model/web/form/TodoMessageProducer.java,8\c\8c2e89f4a6cd45de28a25cd2346f1e9311bf4ed7
+„
+TtodoApplication/src/main/java/com/example/todoApplication/mapper/JsonNodeMapper.java,b\8\b8d83b488c628e48283fdff15077574aa090314f

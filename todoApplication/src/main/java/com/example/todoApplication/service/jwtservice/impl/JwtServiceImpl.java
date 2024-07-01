@@ -25,7 +25,6 @@ import io.jsonwebtoken.security.Keys;
 public class JwtServiceImpl implements JwtService {
     private static final Logger logger = LoggerFactory.getLogger(JwtServiceImpl.class);
 
-
     @Value("${token.signing.key}")
     private String jwtSigningKey;
 

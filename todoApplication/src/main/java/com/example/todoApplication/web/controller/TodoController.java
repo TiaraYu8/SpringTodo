@@ -9,11 +9,19 @@ import com.example.todoApplication.common.model.web.form.TodoUpdateStatus;
 import com.example.todoApplication.common.model.web.response.*;
 import com.example.todoApplication.repository.UserRepository;
 import com.example.todoApplication.service.TodoServices;
+import com.example.todoApplication.service.UserServices;
+import com.example.todoApplication.service.jwtservice.JwtService;
 import jakarta.validation.Valid;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -32,21 +40,34 @@ public class TodoController {
 
     private final TodoServices todoServices;
     private final UserRepository userRepository;
+    private JwtService jwtService;
+    private final UserServices userServices;
 
     @Autowired
-        public TodoController(UserRepository userRepository,TodoServices todoServices) {
-        this.userRepository = userRepository;
-        this.todoServices = todoServices;
+    public void setJwtService(JwtService jwtService) {
+        this.jwtService = jwtService;
     }
+
+    @Autowired
+    public TodoController(TodoServices todoServices, UserRepository userRepository, UserServices userServices) {
+        this.todoServices = todoServices;
+        this.userRepository = userRepository;
+        this.userServices = userServices;
+    }
+
+
 
     @PostMapping(value = "/create")
     public ResponseEntity<TodoCreateResponse> createTodo(@Valid @ModelAttribute TodoCreate form, @RequestParam("cover")MultipartFile file){
+//        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+//            throw new UsernameNotFoundException("Authorization header is missing or invalid");
+//        }
         try{
             todoServices.saveImage(file);
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userId = authentication.getName();
-            System.out.println("Received token for user: " + userId); // Cetak token yang diterima
+            System.out.println("Received token for user: " + userId);
 
             Optional<UserModel> userModelOptional = userRepository.findById(userId);
             if(userModelOptional.isEmpty()){

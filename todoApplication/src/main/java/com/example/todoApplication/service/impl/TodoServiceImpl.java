@@ -56,7 +56,7 @@ public class TodoServiceImpl implements TodoServices {
             String filename = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
             Path destinationFile = Paths.get(uploadDir).resolve(filename).toAbsolutePath();
             Files.copy(file.getInputStream(), destinationFile);
-            return destinationFile.toString(); // Mengembalikan path file yang disimpan
+            return destinationFile.toString();
         } catch (IOException e) {
             throw new RuntimeException("Failed to store file.", e);
         }
@@ -103,7 +103,7 @@ public class TodoServiceImpl implements TodoServices {
         todoModel.setModifiedBy(userId.getUserId());
 
         TodoMessageProducer todoMessageProducer = new TodoMessageProducer();
-        todoMessageProducer.setUserId(userId.getUserId());
+        todoMessageProducer.setUserId("user");
         todoMessageProducer.setTitle(todoModel.getTitle());
         todoMessageProducer.setDescription(todoModel.getDescription());
 
